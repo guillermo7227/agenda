@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1= title
+
+  form#frmNuevaActividad(method="post", action="/addActividad")
+    p #[span#spaMateria]
+    input#hidMateria(type="hidden", name="matnombre")
+    input#txtNombreActividad(type="text", name="actnombre", placeholder="Nombre actividad")
+    input#txtDescripcion(type="text", name="descripcion", placeholder="Descripción")
+    br
+    input#txtFechaInicio(type="text", name="fecinicio", placeholder="Fecha inicio AAAA-MM-DD")
+    input#txtFechaFinal(type="text", name="fecfinal", placeholder="Fecha final AAAA-MM-DD")
+    br
+    input#txtPuntos(type="text", name="puntos", placeholder="Puntos (Entero)")
+    input#txtCalificacion(type="text", name="calificacion", placeholder="Calificacion")
+    br
+    br
+    button#btnSubmit(type="submit") Agregar

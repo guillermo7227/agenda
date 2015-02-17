@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p ¿Borrar #[span#spaActividad] de #[span#spaMateria] ?
+
+  form(method="post", action="/delActividad")
+    input#hidMateria(type="hidden", name="matnombre")
+    input#hidActividad(type="hidden", name="actnombre")
+    button(type="submit") Si, borrar
+    br
+    a#aCancelar(href="/agenda") No, Cancelar

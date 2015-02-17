@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+
+  form#frmNuevaMateria(name="frmNuevaMateria", method="post", action="/addMateria")
+    input(type="text", name="materiaNombre", placeholder="nombre materia")
+    button#btnSubmit(type="submit") Agregar
+    br
+    a(href="/agenda") Cancelar

@@ -1,0 +1,51 @@
+extends layout
+
+block content
+
+  h1 Agenda
+
+  p: a#aNuevaMateria(class="button", href="/nuevaMateria") NUEVA MATERIA
+
+  if materias == ""
+    p No hay materias
+  else
+    #divProximos
+      each materia, i in ordAgenda
+        span.
+          #[span(class='proxFechaFinal') #{materia.fecfinal}] -
+          #{materia.actnombre} .#{materia.descripcion}.
+          [#{materia.matnombre}] #{materia.puntos} pts
+          #[span(class="proxDiasFaltan") -] #[br]
+    br
+    #divTablas
+      each materia, i in materias
+        div(class="unaTabla", data-materia="#{materia-matnombre}")
+          table
+            caption= materia.matnombre
+            thead
+              th(class="modifborrar") M~B
+              th(class="actnombre") Actividad
+              th(class="descripcion") Descripción
+              th(class="fecinicio") Fecha inicio
+              th(class="fecfinal") Fecha final
+              th(class="puntos") Puntos
+              th(class="calificacion") Calif
+            tbody
+              each actividad, i in agenda
+                if actividad.matnombre == materia.matnombre
+                  tr
+                    td
+                      // modificar y borrar
+                      a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/modificarActividad") m
+                      span ~
+                      a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/borrarActividad") b
+                    td= actividad.actnombre
+                    td= actividad.descripcion
+                    td= actividad.fecinicio
+                    td= actividad.fecfinal
+                    td= actividad.puntos
+                    td= actividad.calificacion
+            br
+            tfoot
+              td(colspan="7")
+                a(data-materia="#{materia.matnombre}", href="/nuevaActividad") Nueva Actividad

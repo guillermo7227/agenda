@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  h1= title
+  span Materia: #[span#spaMateria]
+  br
+  span Actividad: #[span#spaActividad]
+  br
+  br
+  form(method="post", action="/updActividad")
+    input#hidMateria(type="hidden", name="matnombre")
+    input#hidActividad(type="hidden", name="actnombre")
+    label Descripción:
+    input#txtDescripcion(type="text", name="descripcion", placeholder="Descripción")
+    br
+    label Fecha inicio:
+    input#txtFechaInicio(type="text", name="fecinicio", placeholder="Fecha inicio (AAAA-MM-DD)")
+    br
+    label Fecha final:
+    input#txtFechaFinal(type="text", name="fecfinal", placeholder="Fecha final (AAAA-MM-DD)")
+    br
+    label Puntos:
+    input#txtPuntos(type="text", name="puntos", placeholder="Puntos (Entero)")
+    br
+    label Calificación:
+    input#txtCalificacion(type="text", name="calificacion", placeholder="Calificación")
+    br
+    br
+    button(type="submit") Guardar
+    br
+    a(href="/agenda") Cancelar

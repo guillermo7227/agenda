@@ -1,0 +1,64 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: ghostwhite;
+}
+
+a {
+  color: #00B7FF;
+}
+
+table {
+  font-size: 10pt;
+  /*border: 1px solid black;*/
+}
+td, th, td {
+  text-align: center;
+  border: 1px solid black;
+  border-color: gray;
+  border-radius: 2px;
+}
+#divTablas {
+  width: 100%;
+}
+.unaTabla {
+  width: 50%;
+  float: left;
+}
+th.modifborrar {
+  width: 0.5%;
+}
+th.descripcion, th.actnombre {
+  width: 20%;
+}
+caption {
+  font-size: 13pt;
+  font-weight: bold;
+}
+tfoot td {
+  text-align: left;
+}
+
+/* formato de celda segun dias para fin de actividad */
+.cAbierta {
+  background-color: lightgreen;
+}
+.c15dias {
+  background-color: LemonChiffon;
+}
+.c5dias {
+  background-color: pink;
+}
+.cCerrada {
+  background-color: gainsboro;
+}
+
+#divProximos {
+  font-size: 16pt;
+}
+
+#fechaTop {
+  position: fixed;
+  top: 0;
+  background-color: violet;
+}
