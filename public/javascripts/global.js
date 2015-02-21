@@ -66,10 +66,10 @@ $(document).ready(function() {
     if (hoy > fecfinal) {
       $(fecha).addClass('cCerrada');
       $(spanDiasQueFaltan).addClass('cCerrada');
-    } else if (hoy > addDate(fecfinal, -5)) {
+    } else if (hoy > addDate(fecfinal, -6)) {
       $(fecha).addClass('c5dias');
       $(spanDiasQueFaltan).addClass('c5dias');
-    } else if (hoy > addDate(fecfinal, -15)) {
+    } else if (hoy > addDate(fecfinal, -16)) {
       $(fecha).addClass('c15dias');
       $(spanDiasQueFaltan).addClass('c15dias');
     } else if (hoy > fecinicio) {
@@ -114,9 +114,9 @@ $(document).ready(function() {
 
     if (hoy > fecfinal) {
       celdaColor.addClass('cCerrada');
-    } else if (hoy > addDate(fecfinal, -5)) {
+    } else if (hoy > addDate(fecfinal, -6)) {
       celdaColor.addClass('c5dias');
-    } else if (hoy > addDate(fecfinal, -15)) {
+    } else if (hoy > addDate(fecfinal, -16)) {
       celdaColor.addClass('c15dias');
     } else if (hoy > fecinicio) {
       celdaColor.addClass('cAbierta');
