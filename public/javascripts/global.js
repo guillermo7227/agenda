@@ -83,7 +83,8 @@ $(document).ready(function() {
   $('#divProximos').children('span').each(function(i,unProximo) {
     var unProximo = $(unProximo);
     var fechaFinal = fixDate(new Date(unProximo.children('.proxFechaFinal').text()))
-    var diasQueFaltan = fechaFinal.getDate() - new Date().getDate();
+    var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
+
     if (diasQueFaltan < 0) {
       unProximo.children('.proxDiasFaltan').text("Cerrada");
     } else {

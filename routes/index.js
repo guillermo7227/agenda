@@ -15,11 +15,18 @@ router.get('/agenda', function(req,res) {
   var agendacollection = db.get('agenda');
   materiascollection.find({},{}, function(e,docsmat) {
     agendacollection.find({},{}, function(e1,docsage) {
-      var fechaLimite = new Date(); fechaLimite.setDate(fechaLimite.getDate() + 10);
-      agendacollection.find({ fecfinal: { $lte: fechaLimite }},
+      var fechaLimite = new Date();
+      fechaLimite.setDate(fechaLimite.getDate() + 16);
+      var fechaComienzo = new Date();
+      fechaComienzo.setDate(fechaComienzo.getDate() - 2); // hoy menos 2 dias
+      agendacollection.find(
+        { fecfinal: { $gte: fechaComienzo },
+          fecfinal: { $lte: fechaLimite }},
         { sort: { fecfinal: 1}}, function(e2,ordage) {
           res.render('agenda', {
-            "materias" : docsmat, "agenda" : docsage, "ordAgenda" : ordage
+            "materias"  : docsmat,
+            "agenda"    : docsage,
+            "ordAgenda" : ordage
           });
         }
       );

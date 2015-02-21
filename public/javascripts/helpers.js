@@ -28,3 +28,11 @@ function formatDate(date) {
 
   return date.getFullYear() + "-" + month + "-" + day
 }
+
+function getDaysDifference(date1, date2) {
+  date1 = new Date(date1);
+  date2 = new Date(date2);
+  var oneday = 1000*60*60*24;
+  var dateDiff = Math.abs(date1 - date2);
+  return Math.round(dateDiff/oneday);
+}

@@ -15,7 +15,8 @@ block content
           #[span(class='proxFechaFinal') #{materia.fecfinal}] -
           #{materia.actnombre} .#{materia.descripcion}.
           [#{materia.matnombre}] #{materia.puntos} pts
-          #[span(class="proxDiasFaltan") -] #[br]
+          #[span(class="proxDiasFaltan") -]
+          #{materia.calificacion} #[br]
     br
     #divTablas
       each materia, i in materias

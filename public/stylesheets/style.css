@@ -7,36 +7,29 @@ body {
 a {
   color: #00B7FF;
 }
+#divTop {
+  position: fixed;
+  top: 0;
+  width: 90%;
+}
+#divMenu {
+  float: right;
+}
+#divMenu ul {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+}
+#divMenu li {
+  display: inline;
+  padding: 10px;
+}
+#fechaTop {
+  background-color: violet;
+}
 
-table {
-  font-size: 10pt;
-  /*border: 1px solid black;*/
-}
-td, th, td {
-  text-align: center;
-  border: 1px solid black;
-  border-color: gray;
-  border-radius: 2px;
-}
-#divTablas {
-  width: 100%;
-}
-.unaTabla {
-  width: 50%;
-  float: left;
-}
-th.modifborrar {
-  width: 0.5%;
-}
-th.descripcion, th.actnombre {
-  width: 20%;
-}
-caption {
-  font-size: 13pt;
-  font-weight: bold;
-}
-tfoot td {
-  text-align: left;
+#divProximos {
+  font-size: 16pt;
 }
 
 /* formato de celda segun dias para fin de actividad */
@@ -53,12 +46,34 @@ tfoot td {
   background-color: gainsboro;
 }
 
-#divProximos {
-  font-size: 16pt;
+table {
+  font-size: 10pt;
+  /*border: 1px solid black;*/
+}
+td, th, td {
+  text-align: center;
+  border: 1px solid black;
+  border-color: gray;
+  border-radius: 2px;
+}
+#divTablas {
+  width: 100%;
+}
+caption {
+  font-size: 13pt;
+  font-weight: bold;
+}
+.unaTabla {
+  width: 50%;
+  float: left;
+}
+th.modifborrar {
+  width: 0.5%;
+}
+th.descripcion, th.actnombre {
+  width: 20%;
 }
 
-#fechaTop {
-  position: fixed;
-  top: 0;
-  background-color: violet;
+tfoot td {
+  text-align: left;
 }
