@@ -8,7 +8,22 @@ router.get('/', function(req, res, next) {
   res.redirect("agenda");
 });
 
-/* GET materias y agenda */
+/* GET materias */
+router.get('/materias', function(req,res) {
+  var materiascollection = req.db.get('materias');
+  var semestrescollection = req.db.get('semestres');
+  semestrescollection.find({},{},function(semerr,semdocs) {
+    materiascollection.find({},{},function(materr,matdocs) {
+      res.render('materias', {
+        "title" : "Materias",
+        "semestres" : semdocs,
+        "materias" : matdocs
+      });
+    });
+  });
+});
+
+/* GET agenda */
 router.get('/agenda', function(req,res) {
   var db = req.db;
   var materiascollection = db.get('materias');
@@ -54,6 +69,18 @@ router.get('/modificarActividad', function(req,res) {
   res.render('modificarActividad', { title : "Modificar Actividad" });
 });
 
+/* GET nuevo semestre */
+router.get('/nuevoSemestre', function(req,res) {
+  res.render('nuevoSemestre', { title: "Nuevo Semestre"});
+});
+
+/* GET modificar materias */
+router.get('/modificarMateria', function(req,res) {
+  res.render('modificarMateria', {
+    title : "Modificar Materia"
+  });
+});
+
 
 
 /*
@@ -62,19 +89,27 @@ router.get('/modificarActividad', function(req,res) {
 
 /* POST agrega una nueva materia */
 router.post('/addMateria', function(req, res) {
-  var materianombre = req.body.materiaNombre;
+  var semestre = req.body.semestre;
+  var matnombre = req.body.matnombre;
+  var matcodigo = req.body.matcodigo;
+  var grucodigo = req.body.grucodigo;
+  var tutnombre = req.body.tutnombre;
 
   var db = req.db;
   var collection = db.get('materias');
 
   collection.insert({
-    "matnombre" : materianombre
+    "semestre"  : semestre,
+    "matnombre" : matnombre,
+    "matcodigo" : matcodigo,
+    "grucodigo" : grucodigo,
+    "tutnombre" : tutnombre
   }, function(err, doc) {
     if (err) {
       res.send("No se pudo escribir en la base de datos.");
     } else {
-      res.location("agenda");
-      res.redirect("agenda");
+      res.location("materias");
+      res.redirect("materias");
     }
   });
 });
@@ -157,6 +192,48 @@ router.post('/updActividad', function(req,res) {
     } else {
       res.location("agenda");
       res.redirect("agenda");
+    }
+  });
+});
+
+/* POST nuevo semestre */
+router.post('/addSemestre', function(req,res) {
+  var semcodigo = req.body.semcodigo;
+  var semestrescollection = req.db.get('semestres');
+  semestrescollection.insert({
+    "semcodigo" : semcodigo
+  }, function(err, doc) {
+    if (err) {
+      res.send("Error al crear el semestre.");
+    } else {
+      res.location("materias");
+      res.redirect("materias");
+    }
+  });
+});
+
+/* POST Modificar materias */
+router.post('/updateMateria', function(req,res) {
+  var semestre  = req.body.semestre;
+  var matnombre = req.body.matnombre;
+  var matcodigo = req.body.matcodigo;
+  var grucodigo = req.body.grucodigo;
+  var tutnombre = req.body.tutnombre;
+
+  var materiascollection = req.db.get('materias');
+  materiascollection.update({
+    "semestre" : semestre,
+    "matnombre" : matnombre
+  }, { $set: {
+    "matcodigo" : matcodigo,
+    "grucodigo" : grucodigo,
+    "tutnombre" : tutnombre
+  }}, function(err,doc) {
+    if (err) {
+      res.send("Error al actualizar la materia.");
+    } else {
+      res.location("materias");
+      res.redirect("materias");
     }
   });
 });

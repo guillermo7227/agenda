@@ -4,7 +4,16 @@ block content
   h1= title
 
   form#frmNuevaMateria(name="frmNuevaMateria", method="post", action="/addMateria")
-    input(type="text", name="materiaNombre", placeholder="nombre materia")
-    button#btnSubmit(type="submit") Agregar
+    input(type="text", name="semestre", placeholder="Semestre p.ej: 2015-1")
     br
-    a(href="/agenda") Cancelar
+    input(type="text", name="matnombre", placeholder="Nombre de materia")
+    br
+    input(type="text", name="matcodigo", placeholder="Código de materia")
+    br
+    input(type="text", name="grucodigo", placeholder="Código de grupo")
+    br
+    input(type="text", name="tutnombre", placeholder="Nombre de Tutor")
+    br
+    button#btnSubmit(type="submit") Agregar
+    &nbsp
+    a(href="/materias") Cancelar

@@ -4,7 +4,7 @@ block content
 
   h1 Agenda
 
-  p: a#aNuevaMateria(class="button", href="/nuevaMateria") NUEVA MATERIA
+  p: a(href="/materias") GESTIONAR MATERIAS
 
   if materias == ""
     p No hay materias
@@ -21,7 +21,7 @@ block content
     #divTablas
       each materia, i in materias
         div(class="unaTabla", data-materia="#{materia-matnombre}")
-          table
+          table(class="agenda")
             caption= materia.matnombre
             thead
               th(class="modifborrar") M~B

@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  h1= title
+
+  span Semestre: #[span#spaSemestre -]
+  br
+  span Materia: #[span#spaMateria -]
+  form(name="modificarMateria", method="post", action="updateMateria")
+    input(type="hidden", name="semestre")
+    input(type="hidden", name="matnombre")
+    label(for="matcodigo") Código de materia:
+    input(type="text", name="matcodigo", placeholder="Código de materia")
+    br
+    label(for="grucodigo") Código de grupo:
+    input(type="text", name="grucodigo", placeholder="Código de grupo")
+    br
+    label(for="tutnombre") Nombre de tutor:
+    input(type="text", name="tutnombre", placeholder="Nombre de tutor")
+    br
+    button(type="submit") Guardar
+    &nbsp
+    a(href="/materias") Cancelar

@@ -34,5 +34,9 @@ function getDaysDifference(date1, date2) {
   date2 = new Date(date2);
   var oneday = 1000*60*60*24;
   var dateDiff = Math.abs(date1 - date2);
-  return Math.round(dateDiff/oneday);
+  var diffInDays = Math.round(dateDiff/oneday);
+  if (date1 < date2) {
+    diffInDays = diffInDays * -1;
+  }
+  return diffInDays;
 }

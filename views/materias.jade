@@ -1,0 +1,32 @@
+extends layout
+
+block content
+  h1= title
+  p: a(href="/nuevoSemestre") NUEVO SEMESTRE
+
+  if semestres == ""
+    p No hay semestres
+  else
+    each semestre, i in semestres
+      table(class="materias")
+        caption= semestre.semcodigo
+        thead
+          th Mod~Borr
+          th Materia
+          th Código Materia
+          th Código grupo
+          th Nombre de Tutor
+        tfoot
+          td(colspan="5"): a(href="/nuevaMateria") Nueva materia
+        tbody
+          each materia, i in materias
+            tr
+              td(data-key="modborr")
+                // anchors modificar y borrar
+                a(href="/modificarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") m
+                &nbsp~ &nbsp
+                a(href="#", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
+              td(data-key="matnombre")= materia.matnombre
+              td(data-key="matcodigo")= materia.matcodigo
+              td(data-key="grucodigo")= materia.grucodigo
+              td(data-key="tutnombre")= materia.tutnombre

@@ -7,7 +7,9 @@ html
     #divTop
       span#fechaTop= new Date()
       #divMenu
-        ul: #[li Agenda] #[li Materias]
+        ul
+          li: a(href="/agenda") Agenda
+          li: a(href="/materias") Materias
     block content
     script(src="/javascripts/jquery.min.js")
     script(src="/javascripts/helpers.js")

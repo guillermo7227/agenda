@@ -12,13 +12,12 @@ $(document).ready(function() {
   /*
    * EVENTOS
    */
-  $("table a").on("click", function(e) {
 
+  // clic anchors en la tabla de Agenda
+  $("table.agenda a").on("click", function(e) {
     var href = $(this).attr('href');
-
     sessionStorage.setItem('materia', $(this).attr("data-materia"));
     sessionStorage.setItem('actividad', $(this).attr("data-actividad"));
-
     if (href == "/modificarActividad") {
       // recupera los valores de la actividad seleccionada
       var fila = $(this).closest('tr');
@@ -37,9 +36,21 @@ $(document).ready(function() {
 
   });
 
+  // click anchors tablas Materias
+  $('table.materias a').on('click', function(e) {
+    sessionStorage.setItem('semestre', $(this).attr('data-semestre'));
+    sessionStorage.setItem('matnombre', $(this).attr('data-matnombre'));
+    var href = $(this).attr('href');
+    if (href == "/modificarMateria") {
+      var fila = $(this).closest('tr');
+      sessionStorage.setItem('matcodigo', fila.children('[data-key="matcodigo"]').text());
+      sessionStorage.setItem('grucodigo', fila.children('[data-key="grucodigo"]').text());
+      sessionStorage.setItem('tutnombre', fila.children('[data-key="tutnombre"]').text());
+    }
+  });
 
   /*
-   * OTROS
+   * AL CARGAR LOS FORMS
    */
 
   if ($("#hidMateria").length) {
@@ -58,10 +69,24 @@ $(document).ready(function() {
     $("#txtCalificacion").val(sessionStorage.getItem('calificacion'));
   }
 
+  if ($('form[name="modificarMateria"]') != "") {
+    $('#spaSemestre').text(sessionStorage.getItem('semestre'));
+    $('#spaMateria').text(sessionStorage.getItem('matnombre'));
+    $('form').find('input[name="semestre"]').val(sessionStorage.getItem('semestre'));
+    $('form').find('input[name="matnombre"]').val(sessionStorage.getItem('matnombre'));
+    $('form').find('input[name="matcodigo"]').val(sessionStorage.getItem('matcodigo'));
+    $('form').find('input[name="grucodigo"]').val(sessionStorage.getItem('grucodigo'));
+    $('form').find('input[name="tutnombre"]').val(sessionStorage.getItem('tutnombre'));
+  }
+
+/*
+   * OTROS
+   */
+
   // formatea y pinta fechas y dias que faltan en Proximos
   $('#divProximos').find('.proxFechaFinal').each(function(i,fecha) {
-    var fecfinal = fixDate(new Date(fecha.innerText));
     var hoy = Date.now();
+    var fecfinal = fixDate(new Date(fecha.innerText));
     var spanDiasQueFaltan = $(fecha).parent().children('.proxDiasFaltan');
     if (hoy > fecfinal) {
       $(fecha).addClass('cCerrada');
@@ -82,7 +107,7 @@ $(document).ready(function() {
   // pone los dias que faltan en 'Proximos'
   $('#divProximos').children('span').each(function(i,unProximo) {
     var unProximo = $(unProximo);
-    var fechaFinal = fixDate(new Date(unProximo.children('.proxFechaFinal').text()))
+    var fechaFinal = fixDate(new Date(unProximo.children('.proxFechaFinal').text()));
     var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
 
     if (diasQueFaltan < 0) {
@@ -94,7 +119,7 @@ $(document).ready(function() {
 
   // formatea las fechas a YYYY-AA-MM
   var fila, fecfinalTexto, fecfinalCelda;
-  $('table').find('tbody tr').each(function(i,fila) {
+  $('table.agenda').find('tbody tr').each(function(i,fila) {
     fila = $(fila);
     fecinicioCelda = fila.find('td').eq(3);
     fecinicioTexto = fixDate(new Date(fecinicioCelda.text()));
@@ -106,7 +131,7 @@ $(document).ready(function() {
 
   // Pinta de colores segun las fechas
   var fila, fecinicio, fecfinal, hoy, puntos;
-  $('table').find('tbody tr').each(function(i) {
+  $('table.agenda').find('tbody tr').each(function(i) {
     fila = $(this);
     fecinicio = fixDate(new Date(fila.find('td').eq(3).text()));
     fecfinal = fixDate(new Date(fila.find('td').eq(4).text()));

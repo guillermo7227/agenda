@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+
+  form(name="frmNuevoSemestre", method="post", action="/addSemestre")
+    input(type="text", name="semcodigo", placeholder="Semestre p.ej: 2015-1")
+    br
+    button(type="submit") Agregar
+    &nbsp
+    a(href="/materias") Cancelar
