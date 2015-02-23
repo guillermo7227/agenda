@@ -69,7 +69,12 @@ $(document).ready(function() {
     $("#txtCalificacion").val(sessionStorage.getItem('calificacion'));
   }
 
-  if ($('form[name="modificarMateria"]') != "") {
+  if ($('form[name="modificarActividad"]').length) {
+    $('#spaMateria').text(sessionStorage.getItem('materia'));
+    // ...
+  }
+
+  if ($('form[name="modificarMateria"]').length) {
     $('#spaSemestre').text(sessionStorage.getItem('semestre'));
     $('#spaMateria').text(sessionStorage.getItem('matnombre'));
     $('form').find('input[name="semestre"]').val(sessionStorage.getItem('semestre'));

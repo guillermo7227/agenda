@@ -5,11 +5,11 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     #divTop
-      span#fechaTop= new Date()
       #divMenu
         ul
           li: a(href="/agenda") Agenda
           li: a(href="/materias") Materias
+      span#fechaTop= new Date()
     block content
     script(src="/javascripts/jquery.min.js")
     script(src="/javascripts/helpers.js")

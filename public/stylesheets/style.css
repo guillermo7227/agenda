@@ -11,9 +11,12 @@ a {
   position: fixed;
   top: 0;
   width: 90%;
+  background-color: lavender;
+  border: 1px solid;
+  border-color: gray;
 }
 #divMenu {
-  float: right;
+  float: left;
 }
 #divMenu ul {
   padding: 0;
@@ -22,7 +25,9 @@ a {
 }
 #divMenu li {
   display: inline;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-weight: bold;
 }
 #fechaTop {
   background-color: violet;

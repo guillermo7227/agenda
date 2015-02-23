@@ -7,7 +7,7 @@ block content
   span Actividad: #[span#spaActividad]
   br
   br
-  form(method="post", action="/updActividad")
+  form(name="modificarActividad", method="post", action="/updActividad")
     input#hidMateria(type="hidden", name="matnombre")
     input#hidActividad(type="hidden", name="actnombre")
     label Descripción:
