@@ -33,10 +33,12 @@ router.get('/agenda', function(req,res) {
       var fechaLimite = new Date();
       fechaLimite.setDate(fechaLimite.getDate() + 16);
       var fechaComienzo = new Date();
-      fechaComienzo.setDate(fechaComienzo.getDate() - 2); // hoy menos 2 dias
+      fechaComienzo.setDate(fechaComienzo.getDate() - 3); // hoy menos 2 dias
       agendacollection.find(
-        { fecfinal: { $gte: fechaComienzo },
-          fecfinal: { $lte: fechaLimite }},
+        { fecfinal: {
+          $gte: fechaComienzo,
+          $lte: fechaLimite
+        }},
         { sort: { fecfinal: 1}}, function(e2,ordage) {
           res.render('agenda', {
             "materias"  : docsmat,
@@ -78,6 +80,13 @@ router.get('/nuevoSemestre', function(req,res) {
 router.get('/modificarMateria', function(req,res) {
   res.render('modificarMateria', {
     title : "Modificar Materia"
+  });
+});
+
+/* GET borrar Materia */
+router.get('/borrarMateria', function(req,res) {
+  res.render('borrarMateria', {
+    title: "Borrar Materia"
   });
 });
 
@@ -231,6 +240,23 @@ router.post('/updateMateria', function(req,res) {
   }}, function(err,doc) {
     if (err) {
       res.send("Error al actualizar la materia.");
+    } else {
+      res.location("materias");
+      res.redirect("materias");
+    }
+  });
+});
+
+router.post('/deleteMateria', function(req,res) {
+  var semestre = req.body.semestre;
+  var matnombre = req.body.matnombre;
+  var materiascollection = req.db.get('materias');
+  materiascollection.remove({
+    semestre: semestre,
+    matnombre: matnombre
+  }, function(err,doc) {
+    if (err) {
+      res.send("Error al borrar la materia.");
     } else {
       res.location("materias");
       res.redirect("materias");

@@ -25,7 +25,7 @@ block content
                 // anchors modificar y borrar
                 a(href="/modificarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") m
                 &nbsp~ &nbsp
-                a(href="#", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
+                a(href="borrarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
               td(data-key="matnombre")= materia.matnombre
               td(data-key="matcodigo")= materia.matcodigo
               td(data-key="grucodigo")= materia.grucodigo

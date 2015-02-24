@@ -84,6 +84,15 @@ $(document).ready(function() {
     $('form').find('input[name="tutnombre"]').val(sessionStorage.getItem('tutnombre'));
   }
 
+  if($('form[name="borrarMateria"]').length) {
+    var semestre = sessionStorage.getItem('semestre');
+    var matnombre = sessionStorage.getItem('matnombre');
+    $('#spaSemestre').text(semestre);
+    $('#spaMateria').text(matnombre);
+    $('input[name="semestre"]').val(semestre);
+    $('input[name="matnombre"]').val(matnombre);
+  }
+
 /*
    * OTROS
    */
