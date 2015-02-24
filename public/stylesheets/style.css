@@ -32,6 +32,11 @@ a {
 #fechaTop {
   background-color: violet;
 }
+#divOpciones {
+  font-size: 90%;
+  float: right;
+  padding-right: 2px;
+}
 
 #divProximos {
   font-size: 16pt;
@@ -79,6 +84,17 @@ th.descripcion, th.actnombre {
   width: 20%;
 }
 
+table.agenda tfoot {
+  display: none;
+}
 tfoot td {
+  text-align: left;
+}
+
+.total {
+  text-align: center;
+}
+
+.comando {
   text-align: left;
 }

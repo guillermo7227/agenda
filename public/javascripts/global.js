@@ -8,10 +8,50 @@ $(document).ready(function() {
     $("#fechaTop").html(fecha.substring(4,fecha.indexOf('GMT')));
   }, 1000);
 
+  // function oculta muestra los tfooters con totales
+  function toggleTFooters(fromOptionClick) {
+    var option = sessionStorage.getItem('verTotales');
+    if (option == undefined) {
+      sessionStorage.setItem('verTotales', "OFF");
+      toggleTFooters(fromOptionClick);
+    } else if (!fromOptionClick) { // si viene desde otra uri, deja igual
+      if (option == "OFF") {
+        $('table.agenda tfoot').css('display', 'none');
+        $('#aVerTotales').text("OFF")
+      } else {
+        $('table.agenda tfoot').css('display', 'table-footer-group');
+        $('#aVerTotales').text("ON");
+      }
+    } else { // si es por click, cambia
+      if (option == "OFF") {
+        sessionStorage.setItem('verTotales', "ON");
+        $('table.agenda tfoot').css('display', 'table-footer-group');
+        $('#aVerTotales').text("ON")
+      } else {
+        sessionStorage.setItem('verTotales', "OFF");
+        $('table.agenda tfoot').css('display', 'none');
+        $('#aVerTotales').text("OFF")
+      }
+    }
+  }
+
+  // oculta opciones
+  if (location == '/agenda') {
+    $('#spaVerTotales').css('display', 'table-footer-group');
+    toggleTFooters();
+  } else {
+    $('#spaVerTotales').css('display', 'none');
+  }
 
   /*
    * EVENTOS
    */
+
+  // clic en anchor Ver Totales
+  $('#aVerTotales').on('click', function(ev) {
+    ev.preventDefault();
+    toggleTFooters(true);
+  });
 
   // clic anchors en la tabla de Agenda
   $("table.agenda a").on("click", function(e) {
@@ -48,6 +88,7 @@ $(document).ready(function() {
       sessionStorage.setItem('tutnombre', fila.children('[data-key="tutnombre"]').text());
     }
   });
+
 
   /*
    * AL CARGAR LOS FORMS
@@ -93,7 +134,7 @@ $(document).ready(function() {
     $('input[name="matnombre"]').val(matnombre);
   }
 
-/*
+  /*
    * OTROS
    */
 
@@ -173,5 +214,35 @@ $(document).ready(function() {
       }
     }
   });
+
+  /*
+   * CALCULOS
+   */
+  if (location == "/agenda") {
+    var tablas = $('table.agenda');
+    tablas.each(function(i,tabla) {
+      var trs_tbody = $(tabla).find('tbody tr');
+      var actPuntajeParcial = 0;
+      var actPuntajeParcialObtenido = 0;
+      $(trs_tbody).each(function(i,tr) {
+        var puntos = $(tr).find('td[data-key="puntos"]').text();
+        var calificacion = $(tr).find('td[data-key="calificacion"]').text();
+        if (!isNaN(parseFloat(calificacion))) {
+          actPuntajeParcial += parseFloat(puntos);
+          actPuntajeParcialObtenido += parseFloat(calificacion);
+        }
+      });
+      if (actPuntajeParcial == 0) actPuntajeParcial = "-";
+      if (actPuntajeParcial == "-") actPuntajeParcialObtenido = "-";
+      var trs_tfoot = $(tabla).find('tfoot tr');
+      $(trs_tfoot).find('td[data-key="actPuntajeParcial"]').text(actPuntajeParcial);
+      $(trs_tfoot).find('td[data-key="actPuntajeParcialObtenido"]').text(actPuntajeParcialObtenido);
+      if (actPuntajeParcial != "-") {
+        var actNotaParcial = actPuntajeParcialObtenido * 5 / actPuntajeParcial
+        $(trs_tfoot).find('td[data-key="actNotaParcial"]').text(actNotaParcial);
+      }
+    });
+
+  }
 
 });

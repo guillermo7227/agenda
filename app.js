@@ -60,6 +60,7 @@ if (app.get('env') === 'development') {
             error: err
         });
     });
+		app.locals.pretty = true;
 }
 
 // production error handler

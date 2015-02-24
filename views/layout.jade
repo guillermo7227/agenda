@@ -10,6 +10,8 @@ html
           li: a(href="/agenda") Agenda
           li: a(href="/materias") Materias
       span#fechaTop= new Date()
+      #divOpciones
+        span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF]
     block content
     script(src="/javascripts/jquery.min.js")
     script(src="/javascripts/helpers.js")

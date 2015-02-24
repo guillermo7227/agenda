@@ -35,18 +35,26 @@ block content
               each actividad, i in agenda
                 if actividad.matnombre == materia.matnombre
                   tr
-                    td
+                    td(data-key="modborr")
                       // modificar y borrar
                       a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/modificarActividad") m
                       span ~
                       a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/borrarActividad") b
-                    td= actividad.actnombre
-                    td= actividad.descripcion
-                    td= actividad.fecinicio
-                    td= actividad.fecfinal
-                    td= actividad.puntos
-                    td= actividad.calificacion
-            br
+                    td(data-key="actnombre")= actividad.actnombre
+                    td(data-key="descripcion")= actividad.descripcion
+                    td(data-key="fecinicio")= actividad.fecinicio
+                    td(data-key="fecfinal")= actividad.fecfinal
+                    td(data-key="puntos")= actividad.puntos
+                    td(data-key="calificacion")= actividad.calificacion
+              tr
+                td(colspan="7", class="comando")
+                  a(data-materia="#{materia.matnombre}", href="/nuevaActividad") Nueva actividad
             tfoot
-              td(colspan="7")
-                a(data-materia="#{materia.matnombre}", href="/nuevaActividad") Nueva Actividad
+              tr
+                td(colspan="5") Puntaje
+                td(data-key="actPuntajeParcial", class="total") -
+                td(data-key="actPuntajeParcialObtenido", class="total") -
+              tr
+                td(colspan="5") Nota
+                td(data-key="actNotaParcial", colspan="2", class="total") -
+            br
