@@ -168,5 +168,6 @@ $(document).ready(function() {
   });
 
 
+  $('#divProximos').css('display','none');
 
 });

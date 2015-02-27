@@ -44,16 +44,17 @@ a {
 
 /* formato de celda segun dias para fin de actividad */
 .cAbierta {
-  background-color: lightgreen;
+  background-color: limegreen;
 }
 .c15dias {
   background-color: LemonChiffon;
 }
 .c5dias {
-  background-color: pink;
+  background-color: lightcoral;
 }
 .cCerrada {
-  background-color: gainsboro;
+  background-color: gray;
+  /*background-color: gainsboro;*/
 }
 
 table {

@@ -4,14 +4,15 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    #divTop
-      #divMenu
-        ul
-          li: a(href="/agenda") Agenda
-          li: a(href="/materias") Materias
-      span#fechaTop= new Date()
-      #divOpciones
-        span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF]
+    header
+      #divTop
+        #divMenu
+          ul
+            li: a(href="/agenda") Agenda
+            li: a(href="/materias") Materias
+        span#fechaTop= new Date()
+        #divOpciones
+          span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF]
     block content
     block scripts
       script(src="/javascripts/jquery.min.js")
