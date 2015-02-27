@@ -13,6 +13,7 @@ html
       #divOpciones
         span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF]
     block content
-    script(src="/javascripts/jquery.min.js")
-    script(src="/javascripts/helpers.js")
-    script(src="/javascripts/global.js")
+    block scripts
+      script(src="/javascripts/jquery.min.js")
+      script(src="/javascripts/helpers.js")
+      script(src="/javascripts/global.js")

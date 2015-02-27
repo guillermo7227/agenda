@@ -18,7 +18,7 @@ block content
           #[span(class="proxDiasFaltan") -]
           #{materia.calificacion} #[br]
     br
-    #divTablas
+    #divTablasAgenda
       each materia, i in materias
         div(class="unaTabla", data-materia="#{materia-matnombre}")
           table(class="agenda")
@@ -58,3 +58,6 @@ block content
                 td(colspan="5") Nota
                 td(data-key="actNotaParcial", colspan="2", class="total") -
             br
+
+block append scripts
+  script(src="/javascripts/agenda.js")
