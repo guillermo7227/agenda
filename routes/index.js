@@ -9,8 +9,8 @@ router.get('/', function(req, res, next) {
 });
 
 router.get ('/api', function (req, res) {
-  var semestrescollection = req.nedb.semestres;
   var materiascollection = req.nedb.materias;
+  var semestrescollection = req.nedb.semestres;
   var agendacollection = req.nedb.agenda;
   semestrescollection.find ( {}, function ( semerr, semdocs ) {
     materiascollection.find ( {}, function ( materr, matdocs ) {
@@ -28,8 +28,8 @@ router.get ('/api', function (req, res) {
 
 /* GET materias */
 router.get('/materias', function(req,res) {
-  var materiascollection = req.db.get('materias');
-  var semestrescollection = req.db.get('semestres');
+  var semestrescollection = req.nedb.semestres;
+  var materiascollection = req.nedb.materias;
   semestrescollection.find({},{},function(semerr,semdocs) {
     materiascollection.find({},{},function(materr,matdocs) {
       res.render('materias', {
@@ -43,9 +43,8 @@ router.get('/materias', function(req,res) {
 
 /* GET agenda */
 router.get('/agenda', function(req,res) {
-  var db = req.db;
-  var materiascollection = db.get('materias');
-  var agendacollection = db.get('agenda');
+  var materiascollection = req.nedb.materias;
+  var agendacollection = req.nedb.agenda;
   materiascollection.find({},{}, function(e,docsmat) {
     agendacollection.find({},{}, function(e1,docsage) {
       var fechaLimite = new Date();
