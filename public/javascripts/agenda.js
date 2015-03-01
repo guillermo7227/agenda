@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
-  $('#spaVerTotales').css('display', 'table-footer-group');
+  $('#spaVerTotales').css('display', 'inline');
+  $('#spaResaltarColaborativos').css('display', 'inline');
   toggleTFooters();
 
   // function oculta muestra los tfooters con totales
@@ -37,6 +38,27 @@ $(document).ready(function() {
   $('#aVerTotales').on('click', function(ev) {
     ev.preventDefault();
     toggleTFooters(true);
+  });
+
+  // resalta los trabajos colaborativos abiertos
+  $('#aResaltarColaborativos').on('click', function(ev) {
+    ev.preventDefault();
+    var tablas = $('table.agenda');
+    if ($(this).text() == "OFF") {
+      $(tablas).each(function(i,tabla) {
+        var tdsDescripcion = $(tabla).find('td[data-key="descripcion"]:contains("colaborativo")');
+        $(tdsDescripcion).each(function(i,td) {
+          var fecinicio = new Date($(td).closest('tr').children('td[data-key="fecinicio"]').text());
+          if (fecinicio < Date.now()) $(td).addClass('resaltado');
+        });
+      });
+      $(this).text("ON");
+    } else {
+      $(tablas).each(function(i,tabla) {
+        $(tabla).find('td.resaltado').removeClass('resaltado');
+      });
+      $(this).text("OFF")
+    }
   });
 
 
@@ -114,19 +136,24 @@ $(document).ready(function() {
   $('table.agenda').find('tbody tr').each(function(i) {
     var fila, fecinicio, fecfinal, hoy, puntos;
     fila = $(this);
-    fecinicio = fixDate(new Date(fila.find('td').eq(3).text()));
-    fecfinal = fixDate(new Date(fila.find('td').eq(4).text()));
-    celdaColor = fila.find('td').eq(4);
+    var calificacion = fila.find('td[data-key="calificacion"]').text();
+    fecinicio = fixDate(new Date(fila.find('td[data-key="fecinicio"]').text()));
+    fecfinal = fixDate(new Date(fila.find('td[data-key="fecfinal"]').text()));
+    tdFecfinal = fila.find('td[data-key="fecfinal"]');
     hoy = Date.now();
 
     if (hoy > fecfinal) {
-      celdaColor.addClass('cCerrada');
+      tdFecfinal.addClass('cCerrada');
     } else if (hoy > addDate(fecfinal, -6)) {
-      celdaColor.addClass('c5dias');
+      if (calificacion != "" && !isNaN(calificacion) || calificacion == "E") {
+        tdFecfinal.addClass('cEntregada')
+      } else {
+        tdFecfinal.addClass('c5dias');
+      }
     } else if (hoy > addDate(fecfinal, -16)) {
-      celdaColor.addClass('c15dias');
+      tdFecfinal.addClass('c15dias');
     } else if (hoy > fecinicio) {
-      celdaColor.addClass('cAbierta');
+      tdFecfinal.addClass('cAbierta');
     }
   });
 

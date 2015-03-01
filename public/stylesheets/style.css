@@ -56,6 +56,12 @@ a {
   background-color: gray;
   /*background-color: gainsboro;*/
 }
+.cEntregada {
+  background-color: dodgerblue;
+}
+td.resaltado {
+  background-color: MediumTurquoise;
+}
 
 table {
   font-size: 10pt;
