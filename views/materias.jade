@@ -24,11 +24,12 @@ block content
               td(data-key="modborr")
                 // anchors modificar y borrar
                 a(href="/modificarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") m
-                &nbsp~ &nbsp
+                &nbsp~&nbsp
                 a(href="borrarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
               td(data-key="matnombre")= materia.matnombre
               td(data-key="matcodigo")= materia.matcodigo
               td(data-key="grucodigo")= materia.grucodigo
               td(data-key="tutnombre")= materia.tutnombre
+
 block append scripts
   script(src="/javascripts/materias.js")

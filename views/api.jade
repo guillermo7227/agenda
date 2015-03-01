@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  if semestres.length == 0
+    p No hay semestres
+
+  else 
+
+    if materias.length == 0
+      p No hay materias
+    
+    else 
+
+      each semestre in semestres
+        span= semestre.semestre
+        br
+
+      each materia in materias
+        span #{materia.matnombre} -> #{materia.matcodigo}
+        br
+
+      p= agenda.length

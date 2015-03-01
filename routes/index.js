@@ -8,6 +8,24 @@ router.get('/', function(req, res, next) {
   res.redirect("agenda");
 });
 
+router.get ('/api', function (req, res) {
+  var semestrescollection = req.nedb.semestres;
+  var materiascollection = req.nedb.materias;
+  var agendacollection = req.nedb.agenda;
+  semestrescollection.find ( {}, function ( semerr, semdocs ) {
+    materiascollection.find ( {}, function ( materr, matdocs ) {
+      agendacollection.find ( {}, function ( agerr, agedocs ) {
+        res.render ( 'api', {
+          title: "Api",
+          semestres: semdocs,
+          agenda: agedocs,
+          materias: matdocs
+        });
+      });
+    });
+  });
+});
+
 /* GET materias */
 router.get('/materias', function(req,res) {
   var materiascollection = req.db.get('materias');
