@@ -27,8 +27,8 @@ router.get('/materias', function(req,res) {
 router.get('/agenda', function(req,res) {
   var materiascollection = req.nedb.materias;
   var agendacollection = req.nedb.agenda;
-  materiascollection.find({},{}, function(e,docsmat) {
-    agendacollection.find({},{}, function(e1,docsage) {
+  materiascollection.find({}).sort({ matnombre : 1 }).exec(function(e,docsmat) {
+    agendacollection.find({}).sort({ fecinicio : 1, fecfinal: 1 }).exec(function(e1,docsage) {
       var fechaLimite = new Date();
       fechaLimite.setDate(fechaLimite.getDate() + 16);
       var fechaComienzo = new Date();
