@@ -8,24 +8,6 @@ router.get('/', function(req, res, next) {
   res.redirect("agenda");
 });
 
-router.get ('/api', function (req, res) {
-  var materiascollection = req.nedb.materias;
-  var semestrescollection = req.nedb.semestres;
-  var agendacollection = req.nedb.agenda;
-  semestrescollection.find ( {}, function ( semerr, semdocs ) {
-    materiascollection.find ( {}, function ( materr, matdocs ) {
-      agendacollection.find ( {}, function ( agerr, agedocs ) {
-        res.render ( 'api', {
-          title: "Api",
-          semestres: semdocs,
-          agenda: agedocs,
-          materias: matdocs
-        });
-      });
-    });
-  });
-});
-
 /* GET materias */
 router.get('/materias', function(req,res) {
   var semestrescollection = req.nedb.semestres;
@@ -192,29 +174,21 @@ router.post('/delActividad', function(req,res) {
 
 /* POST modifica una actividad */
 router.post('/updActividad', function(req,res) {
-  var matnombre = req.body.matnombre;
-  var actnombre = req.body.actnombre;
-  var descripcion = req.body.descripcion;
-  var fecinicio = new Date(req.body.fecinicio);
-  var fecfinal = new Date(req.body.fecfinal);
-  var puntos = req.body.puntos;
-  var calificacion = req.body.calificacion;
-
-  var collection = req.db.get('agenda');
-  collection.update({
-    "matnombre" : matnombre,
-    "actnombre" : actnombre
+  var agendacollection = req.nedb.agenda;
+  agendacollection.update({
+    "matnombre" : req.body.matnombre,
+    "actnombre" : req.body.actnombre
   }, {
     $set : {
-      "descripcion" : descripcion,
-      "fecinicio" : fecinicio,
-      "fecfinal"  : fecfinal,
-      "puntos"    : puntos,
-      "calificacion" : calificacion
+      "descripcion" : req.body.descripcion,
+      "fecinicio" : new Date(req.body.fecinicio),
+      "fecfinal"  : new Date(req.body.fecfinal),
+      "puntos"    : req.body.puntos,
+      "calificacion" : req.body.calificacion
     }
   }, function(err,doc) {
     if (err) {
-      res.send("No se pudo actualizar la base de datos.");
+      res.send("Error. No se pudo modificar la actividad.");
     } else {
       res.location("agenda");
       res.redirect("agenda");

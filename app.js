@@ -5,10 +5,6 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/agenda');
-
 var Datastore = require('nedb');
 var nedb = {};
 nedb.semestres = new Datastore({ filename: './semestres.db', autoload: true })
@@ -34,7 +30,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // make our database accessible to our router
 app.use(function(req, res, next) {
-	req.db = db;
 	req.nedb = nedb;
 	next();
 });
