@@ -21,3 +21,4 @@
 {"matnombre":"Fundamentos de Economía","actnombre":"Paso 2","fecinicio":{"$$date":1424044800000},"fecfinal":{"$$date":1427155200000},"puntos":"100","calificacion":"A2","descripcion":"colaborativo","semestre":"2015-1","_id":"wPSZHeuUrbwYJoTe"}
 {"matnombre":"Contabilidad","actnombre":"Momento 1","descripcion":"colaborativo","fecinicio":{"$$date":1424044800000},"fecfinal":{"$$date":1427414400000},"puntos":"175","calificacion":"A1.5","semestre":"2015-1","_id":"L2XkiaTtWGqSWNWd"}
 {"matnombre":"Fundamentos de Administraciòn","actnombre":"Momento 3","fecinicio":{"$$date":1425427200000},"fecfinal":{"$$date":1427155200000},"puntos":"115","calificacion":"A3","descripcion":"colaborativo","semestre":"2015-1","_id":"JI6yhxtaCmiZqwus"}
+{"matnombre":"Contabilidad","actnombre":"Momento 1","descripcion":"colaborativo","fecinicio":{"$$date":1424044800000},"fecfinal":{"$$date":1427414400000},"puntos":"175","calificacion":"A2","semestre":"2015-1","_id":"L2XkiaTtWGqSWNWd"}
