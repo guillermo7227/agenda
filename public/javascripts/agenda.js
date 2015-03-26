@@ -48,8 +48,9 @@ $(document).ready(function() {
       $(tablas).each(function(i,tabla) {
         var tdsDescripcion = $(tabla).find('td[data-key="descripcion"]:contains("colaborativo")');
         $(tdsDescripcion).each(function(i,td) {
-          var fecinicio = new Date($(td).closest('tr').children('td[data-key="fecinicio"]').text());
-          if (fecinicio < Date.now()) $(td).addClass('resaltado');
+            var fecinicio = new Date($(td).closest('tr').children('td[data-key="fecinicio"]').text());
+            var fecfinal = new Date($(td).closest('tr').children('td[data-key="fecfinal"]').text());
+            if (fecinicio < Date.now() && fecfinal > Date.now()) $(td).addClass('resaltado');
         });
       });
       $(this).text("ON");
@@ -132,7 +133,7 @@ $(document).ready(function() {
     fecfinalCelda.html(formatDate(fecfinalTexto));
   });
 
-  // Pinta de colores segun las fechas //TODO fix this
+  // Pinta de colores segun las fechas
   $('table.agenda').find('tbody tr').each(function(i) {
     var fila, fecinicio, fecfinal, hoy, puntos;
     fila = $(this);
@@ -144,15 +145,13 @@ $(document).ready(function() {
 
     if (hoy > fecfinal) {
       tdFecfinal.addClass('cCerrada');
+    } else if (calificacion != "" && !isNaN(calificacion) || calificacion == "E") {
+        tdFecfinal.addClass('cEntregada');
     } else if (hoy > addDate(fecfinal, -6)) {
-      if (calificacion != "" && !isNaN(calificacion) || calificacion == "E") {
-        tdFecfinal.addClass('cEntregada')
-      } else {
         tdFecfinal.addClass('c5dias');
-      }
     } else if (hoy > addDate(fecfinal, -16)) {
       tdFecfinal.addClass('c15dias');
-    } else if (hoy > fecinicio) {
+    } else if (hoy >= fecinicio) {
       tdFecfinal.addClass('cAbierta');
     }
   });

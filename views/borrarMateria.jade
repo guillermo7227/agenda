@@ -4,9 +4,11 @@ block content
   h1= title
 
   p Borrar materia #[span#spaMateria ??] de semestre #[span#spaSemestre ??]?
+
   form(name="borrarMateria", action="/deleteMateria", method="post")
     input(type="hidden", name="matnombre")
     input(type="hidden", name="semestre")
+
     button(type="submit") Si, borrar
     &nbsp
     a(href="/materias") No, cancelar

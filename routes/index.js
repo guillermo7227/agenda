@@ -28,7 +28,7 @@ router.get('/agenda', function(req,res) {
   var materiascollection = req.nedb.materias;
   var agendacollection = req.nedb.agenda;
   materiascollection.find({}).sort({ matnombre : 1 }).exec(function(e,docsmat) {
-    agendacollection.find({}).sort({ fecinicio : 1, fecfinal: 1 }).exec(function(e1,docsage) {
+    agendacollection.find({}).sort({ fecfinal : 1, fecinicio: 1 }).exec(function(e1,docsage) {
       var fechaLimite = new Date();
       fechaLimite.setDate(fechaLimite.getDate() + 16);
       var fechaComienzo = new Date();
@@ -132,9 +132,9 @@ router.post('/addActividad', function(req,res) {
   var puntos = req.body.puntos;
   var calificacion = req.body.calificacion;
 
-  var collection = req.db.get('agenda');
+  var agendacollection = req.nedb.agenda;
 
-  collection.insert({
+  agendacollection.insert({
     "matnombre" : matnombre,
     "actnombre" : actnombre,
     "descripcion" : descripcion,
@@ -157,9 +157,9 @@ router.post('/delActividad', function(req,res) {
   var matnombre = req.body.matnombre;
   var actnombre = req.body.actnombre;
 
-  var collection = req.db.get('agenda');
+  var agendacollection = req.nedb.agenda;
 
-  collection.remove({
+  agendacollection.remove({
     "matnombre" : matnombre,
     "actnombre" : actnombre
   }, function(err, doc) {
