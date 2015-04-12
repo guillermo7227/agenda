@@ -39,7 +39,9 @@ a {
 }
 
 #divProximos {
-  font-size: 16pt;
+  font-size: 12pt;
+    width: 50%;
+/*display: none;*/
 }
 
 /* formato de celda segun dias para fin de actividad */

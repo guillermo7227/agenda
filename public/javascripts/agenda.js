@@ -2,7 +2,9 @@ $(document).ready(function() {
 
   $('#spaVerTotales').css('display', 'inline');
   $('#spaResaltarColaborativos').css('display', 'inline');
+  $('#spaAlternarProximos').css('display', 'inline');
   toggleTFooters();
+
 
   // function oculta muestra los tfooters con totales
   function toggleTFooters(fromOptionClick) {
@@ -34,6 +36,13 @@ $(document).ready(function() {
   /*
    * EVENTOS
    */
+
+    //alternar proximas fechas
+    $('#aAlternarProximos').on('click', function (ev) {
+        ev.preventDefault();
+        $('#divProximos').slideToggle();
+    });
+
   // clic en anchor Ver Totales
   $('#aVerTotales').on('click', function(ev) {
     ev.preventDefault();
@@ -93,16 +102,16 @@ $(document).ready(function() {
     var fecfinal = fixDate(new Date(fecha.innerText));
     var spanDiasQueFaltan = $(fecha).parent().children('.proxDiasFaltan');
     if (hoy > fecfinal) {
-      $(fecha).addClass('cCerrada');
+      //$(fecha).addClass('cCerrada');
       $(spanDiasQueFaltan).addClass('cCerrada');
     } else if (hoy > addDate(fecfinal, -6)) {
-      $(fecha).addClass('c5dias');
+      //$(fecha).addClass('c5dias');
       $(spanDiasQueFaltan).addClass('c5dias');
     } else if (hoy > addDate(fecfinal, -16)) {
-      $(fecha).addClass('c15dias');
+      //$(fecha).addClass('c15dias');
       $(spanDiasQueFaltan).addClass('c15dias');
     } else {
-      $(fecha).addClass('cAbierta');
+      //$(fecha).addClass('cAbierta');
       $(spanDiasQueFaltan).addClass('cAbierta');
     }
     fecha.innerHTML = formatDate(fecfinal);
@@ -194,6 +203,6 @@ $(document).ready(function() {
   });
 
 
-  $('#divProximos').css('display','none');
+  // $('#divProximos').css('display','none');
 
 });

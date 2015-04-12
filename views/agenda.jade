@@ -11,12 +11,14 @@ block content
   else
     #divProximos
       each materia, i in ordAgenda
-        span.
-          #[span(class='proxFechaFinal') #{materia.fecfinal}] -
-          #{materia.actnombre} .#{materia.descripcion}.
-          [#{materia.matnombre}] #{materia.puntos} pts
-          #[span(class="proxDiasFaltan") -]
-          #{materia.calificacion} #[br]
+        span [#{materia.matnombre}]
+        br
+        span(style="padding-left:2em").
+            #{materia.actnombre}. "#{materia.descripcion}". #{materia.puntos} pts
+        span(style="float:right").
+            #[span(class='proxFechaFinal', style="display:none") #{materia.fecfinal}]
+            #[span(class="proxDiasFaltan") #{materia.calificacion} ]
+        br
     br
     #divTablasAgenda
       each materia, i in materias

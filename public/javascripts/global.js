@@ -9,6 +9,7 @@ $(document).ready(function() {
   // oculta opciones
   $('#spaVerTotales').css('display', 'none');
   $('#spaResaltarColaborativos').css('display', 'none');
+  $('#spaAlternarProximos').css('display', 'none');
 
 
 

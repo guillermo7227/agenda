@@ -30,7 +30,7 @@ router.get('/agenda', function(req,res) {
   materiascollection.find({}).sort({ matnombre : 1 }).exec(function(e,docsmat) {
     agendacollection.find({}).sort({ fecfinal : 1, fecinicio: 1 }).exec(function(e1,docsage) {
       var fechaLimite = new Date();
-      fechaLimite.setDate(fechaLimite.getDate() + 16);
+      fechaLimite.setDate(fechaLimite.getDate() + 21);
       var fechaComienzo = new Date();
       fechaComienzo.setDate(fechaComienzo.getDate() - 3); // hoy menos 2 dias
       agendacollection.find(

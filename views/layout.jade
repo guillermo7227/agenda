@@ -12,8 +12,9 @@ html
             li: a(href="/materias") Materias
         span#fechaTop= new Date()
         #divOpciones
-          span#spaResaltarColaborativos Resaltar colaborativos abiertos: #[a#aResaltarColaborativos(href="#") OFF] | &nbsp
-          span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF] &nbsp
+            span#spaResaltarColaborativos Resaltar colaborativos abiertos: #[a#aResaltarColaborativos(href="#") OFF] | &nbsp
+            span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF] | &nbsp
+            span#spaAlternarProximos #[a#aAlternarProximos(href="#") Alternar próximas fechas] &nbsp
     block content
     block scripts
       script(src="/javascripts/jquery.min.js")
