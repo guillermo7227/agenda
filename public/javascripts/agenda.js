@@ -101,34 +101,39 @@ $(document).ready(function() {
     var hoy = Date.now();
     var fecfinal = fixDate(new Date(fecha.innerText));
     var spanDiasQueFaltan = $(fecha).parent().children('.proxDiasFaltan');
+    var divUnProximo = $(fecha).closest('div');
     if (hoy > fecfinal) {
       //$(fecha).addClass('cCerrada');
-      $(spanDiasQueFaltan).addClass('cCerrada');
+    //   $(spanDiasQueFaltan).addClass('cCerrada');
+      $(divUnProximo).addClass('cCerrada');
     } else if (hoy > addDate(fecfinal, -6)) {
       //$(fecha).addClass('c5dias');
-      $(spanDiasQueFaltan).addClass('c5dias');
+    //   $(spanDiasQueFaltan).addClass('c5dias');
+      $(divUnProximo).addClass('c5dias');
     } else if (hoy > addDate(fecfinal, -16)) {
       //$(fecha).addClass('c15dias');
-      $(spanDiasQueFaltan).addClass('c15dias');
+    //   $(spanDiasQueFaltan).addClass('c15dias');
+      $(divUnProximo).addClass('c15dias');
     } else {
       //$(fecha).addClass('cAbierta');
-      $(spanDiasQueFaltan).addClass('cAbierta');
+    //   $(spanDiasQueFaltan).addClass('cAbierta');
+      $(divUnProximo).addClass('cAbierta');
     }
     fecha.innerHTML = formatDate(fecfinal);
   });
 
-  // pone los dias que faltan en 'Proximos'
-  $('#divProximos').children('span').each(function(i,unProximo) {
-    var unProximo = $(unProximo);
-    var fechaFinal = fixDate(new Date(unProximo.children('.proxFechaFinal').text()));
-    var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
+    // pone los dias que faltan en 'Proximos'
+    $('#divProximos').children('div').each(function(i,unProximo) {
+        var unProximo = $(unProximo);
+        var fechaFinal = fixDate(new Date(unProximo.find('.proxFechaFinal').text()));
+        var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
 
-    if (diasQueFaltan < 0) {
-      unProximo.children('.proxDiasFaltan').text("Cerrada");
-    } else {
-      unProximo.children('.proxDiasFaltan').text(diasQueFaltan + " día(s)");
-    }
-  });
+        if (diasQueFaltan < 0) {
+          unProximo.find('.proxDiasFaltan').text("Cerrada");
+        } else {
+          unProximo.find('.proxDiasFaltan').text(diasQueFaltan + " día(s)");
+        }
+    });
 
   // formatea las fechas a YYYY-AA-MM //TODO: fix this
   $('table.agenda').find('tbody tr').each(function(i,fila) {
