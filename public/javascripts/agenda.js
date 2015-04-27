@@ -3,6 +3,7 @@ $(document).ready(function() {
   $('#spaVerTotales').css('display', 'inline');
   $('#spaResaltarColaborativos').css('display', 'inline');
   $('#spaAlternarProximos').css('display', 'inline');
+  $('#spaAlternarSoloColaborativosEnProximos').css('display', 'inline');
   toggleTFooters();
 
 
@@ -41,6 +42,22 @@ $(document).ready(function() {
     $('#aAlternarProximos').on('click', function (ev) {
         ev.preventDefault();
         $('#divProximos').slideToggle();
+    });
+
+    $('#aAlternarSoloColaborativosEnProximos').on('click', function (ev) {
+        ev.preventDefault ();
+        $('#divProximos').children('div').each(function (i, unProximo) {
+            var esColaborativo = 0;
+            $(unProximo).children('span').each(function (i, unSpan) {
+                var textoSpan = $(unSpan).text();
+                if (textoSpan.toLowerCase().indexOf('colaborativo') >= 0) {
+                    esColaborativo += 1;
+                }
+            });
+            if (esColaborativo == 0) {
+                $(unProximo).slideToggle();
+            }
+        });
     });
 
   // clic en anchor Ver Totales

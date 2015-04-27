@@ -12,9 +12,14 @@ html
             li: a(href="/materias") Materias
         span#fechaTop= new Date()
         #divOpciones
-            span#spaResaltarColaborativos Resaltar colaborativos abiertos: #[a#aResaltarColaborativos(href="#") OFF] | &nbsp
-            span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF] | &nbsp
-            span#spaAlternarProximos #[a#aAlternarProximos(href="#") Alternar próximas fechas] &nbsp
+            ul
+                li: span Opciones...
+                    ul
+                        li: span#spaResaltarColaborativos Resaltar colaborativos abiertos: #[a#aResaltarColaborativos(href="#") OFF]
+                        li: span#spaVerTotales Ver totales: #[a#aVerTotales(href="#") OFF]
+                        li: span#spaAlternarProximos #[a#aAlternarProximos(href="#") Alternar próximas fechas]
+                        li: span#spaAlternarSoloColaborativosEnProximos #[a#aAlternarSoloColaborativosEnProximos(href="#") Alternar sólo próximos colaborativos]
+
     block content
     block scripts
       script(src="/javascripts/jquery.min.js")
