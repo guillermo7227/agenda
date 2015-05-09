@@ -1,49 +1,61 @@
 $(document).ready(function() {
 
-  $('#spaVerTotales').css('display', 'inline');
-  $('#spaResaltarColaborativos').css('display', 'inline');
-  $('#spaAlternarProximos').css('display', 'inline');
-  $('#spaAlternarSoloColaborativosEnProximos').css('display', 'inline');
-  toggleTFooters();
 
-
-  // function oculta muestra los tfooters con totales
-  function toggleTFooters(fromOptionClick) {
-    var option = sessionStorage.getItem('verTotales');
-    if (option == undefined) {
-      sessionStorage.setItem('verTotales', "OFF");
-      toggleTFooters(fromOptionClick);
-    } else if (!fromOptionClick) { // si viene desde otra uri, deja igual
-      if (option == "OFF") {
-        $('table.agenda tfoot').css('display', 'none');
-        $('#aVerTotales').text("OFF")
-      } else {
-        $('table.agenda tfoot').css('display', 'table-footer-group');
-        $('#aVerTotales').text("ON");
-      }
-    } else { // si es por click, cambia
-      if (option == "OFF") {
-        sessionStorage.setItem('verTotales', "ON");
-        $('table.agenda tfoot').css('display', 'table-footer-group');
-        $('#aVerTotales').text("ON")
-      } else {
-        sessionStorage.setItem('verTotales', "OFF");
-        $('table.agenda tfoot').css('display', 'none');
-        $('#aVerTotales').text("OFF")
-      }
+    // function oculta muestra los tfooters con totales
+    function toggleTFooters(fromOptionClick) {
+        var option = sessionStorage.getItem('verTotales');
+        if (option == undefined) {
+          sessionStorage.setItem('verTotales', "OFF");
+          toggleTFooters(fromOptionClick);
+        } else if (!fromOptionClick) { // si viene desde otra uri, deja igual
+          if (option == "OFF") {
+            $('table.agenda tfoot').css('display', 'none');
+            $('#aVerTotales').text("OFF")
+          } else {
+            $('table.agenda tfoot').css('display', 'table-footer-group');
+            $('#aVerTotales').text("ON");
+          }
+        } else { // si es por click, cambia
+          if (option == "OFF") {
+            sessionStorage.setItem('verTotales', "ON");
+            $('table.agenda tfoot').css('display', 'table-footer-group');
+            $('#aVerTotales').text("ON")
+          } else {
+            sessionStorage.setItem('verTotales', "OFF");
+            $('table.agenda tfoot').css('display', 'none');
+            $('#aVerTotales').text("OFF")
+          }
+        }
     }
-  }
 
-  /*
+    // funcion devuelve true si la fila pasada es la fila del examen final
+    function isExamenFinalRow ( tablerow ) {
+
+        var actividad = $ ( tablerow ). find ( 'td[data-key="actividad"]' ).text();
+        var descripcion = $ ( tablerow ). find ( 'td[data-key="descripcion"]' ).text();
+
+        return ( (actividad + '' + descripcion).toLowerCase().indexOf ( 'final' ) > 0 );
+
+    }
+
+
+    $('#spaVerTotales').css('display', 'inline');
+    $('#spaResaltarColaborativos').css('display', 'inline');
+    $('#spaAlternarProximos').css('display', 'inline');
+    $('#spaAlternarSoloColaborativosEnProximos').css('display', 'inline');
+    toggleTFooters();
+
+  /*******************************
    * EVENTOS
-   */
+   *******************************/
 
-    //alternar proximas fechas
+    // opcion alternar proximas fechas
     $('#aAlternarProximos').on('click', function (ev) {
         ev.preventDefault();
         $('#divProximos').slideToggle();
     });
 
+    // opcion alternar solo colaborativos en proximos
     $('#aAlternarSoloColaborativosEnProximos').on('click', function (ev) {
         ev.preventDefault ();
         $('#divProximos').children('div').each(function (i, unProximo) {
@@ -60,13 +72,13 @@ $(document).ready(function() {
         });
     });
 
-  // clic en anchor Ver Totales
+  // opcion Ver Totales
   $('#aVerTotales').on('click', function(ev) {
     ev.preventDefault();
     toggleTFooters(true);
   });
 
-  // resalta los trabajos colaborativos abiertos
+  // opcion resaltar los trabajos colaborativos abiertos
   $('#aResaltarColaborativos').on('click', function(ev) {
     ev.preventDefault();
     var tablas = $('table.agenda');
@@ -89,7 +101,7 @@ $(document).ready(function() {
   });
 
 
-  // clic anchors en la tabla de Agenda //TODO: fix this
+  // comandos Mod y Borr en tablas de Agenda //TODO: fix this
   $("table.agenda a").on("click", function(e) {
     var href = $(this).attr('href');
     sessionStorage.setItem('materia', $(this).attr("data-materia"));
@@ -112,6 +124,14 @@ $(document).ready(function() {
 
   });
 
+    /****
+     * fin eventos
+     ***************************/
+
+
+    /**************************
+     * TRABAJO CON PROXIMOS
+     *************************************************/
 
   // formatea y pinta fechas y dias que faltan en Proximos
   $('#divProximos').find('.proxFechaFinal').each(function(i,fecha) {
@@ -152,6 +172,11 @@ $(document).ready(function() {
         }
     });
 
+
+    /***********************
+     * TRABAJO CON LAS TABLAS
+     **********************************************/
+
   // formatea las fechas a YYYY-AA-MM //TODO: fix this
   $('table.agenda').find('tbody tr').each(function(i,fila) {
     var fila, fecfinalTexto, fecfinalCelda;
@@ -176,14 +201,17 @@ $(document).ready(function() {
 
     if (hoy > fecfinal) {
       tdFecfinal.addClass('cCerrada');
-    } else if (calificacion != "" && !isNaN(calificacion) || calificacion == "E") {
-        tdFecfinal.addClass('cEntregada');
-    } else if (hoy > addDate(fecfinal, -6)) {
-        tdFecfinal.addClass('c5dias');
-    } else if (hoy > addDate(fecfinal, -16)) {
-      tdFecfinal.addClass('c15dias');
-    } else if (hoy >= fecinicio) {
-      tdFecfinal.addClass('cAbierta');
+    } else {
+        if (hoy >= fecinicio) {
+            tdFecfinal.addClass('cAbierta');
+            if (calificacion != "" && !isNaN(calificacion) || calificacion == "E") {
+                tdFecfinal.addClass('cEntregada');
+            } else if (hoy > addDate(fecfinal, -6)) {
+                tdFecfinal.addClass('c5dias');
+            } else if (hoy > addDate(fecfinal, -16)) {
+              tdFecfinal.addClass('c15dias');
+            }
+        }
     }
   });
 
@@ -198,30 +226,120 @@ $(document).ready(function() {
     }
   });
 
-  /*
+
+    // Muestra los totales finales si existe una calificación del examen final (25%)
+    $('table.agenda').each( function ( i, table ) {
+
+        $(table).find ( 'tbody tr' ).each ( function ( i, tr ) {
+
+            if ( isExamenFinalRow ( tr ) ) {
+
+                var calificacionExamenFinal = $(tr).find( 'td[data-key="calificacion"]' ).text();
+
+                if ( !isNaN ( parseFloat ( calificacionExamenFinal ) ) ) {
+
+                    // existe una calificacion
+                    $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
+
+                        $( row ).css ( 'display', 'table-row' );
+
+                    });
+
+                } else {
+
+                    // no existe una calificacion
+                    $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
+
+                        $( row ).css ( 'display', 'none' );
+
+                    });
+
+                }
+
+            }
+
+        });
+
+    });
+
+
+
+  /***************************
    * CALCULOS
-   */
+   **************************************/
   $('table.agenda').each(function(i,tabla) {
+
     var trs_tbody = $(tabla).find('tbody tr');
     var actPuntajeParcial = 0;
     var actPuntajeParcialObtenido = 0;
+    var notaExamenFinal = "-";
+
+    // acumula los valores de las actividades
+
     $(trs_tbody).each(function(i,tr) {
+
+
+        // no suma examen final
+        if ( isExamenFinalRow ( tr ) ) {
+
+            var puntajeExamenFinal = $( tr ).find ( 'td[data-key="puntos"]' ).text();
+            var calificacionExamenFinal = $( tr ).find ( 'td[data-key="calificacion"]' ).text();
+
+            // si existe calificacion final valida
+            if ( !isNaN ( parseFloat ( calificacionExamenFinal ) ) ) {
+
+                notaExamenFinal = parseFloat ( calificacionExamenFinal ) / parseFloat ( puntajeExamenFinal ) * 5
+
+            }
+
+            return true;
+
+        }
+
       var puntos = $(tr).find('td[data-key="puntos"]').text();
       var calificacion = $(tr).find('td[data-key="calificacion"]').text();
+
       if (!isNaN(parseFloat(calificacion))) {
+
         actPuntajeParcial += parseFloat(puntos);
+
         actPuntajeParcialObtenido += parseFloat(calificacion);
+
       }
     });
+
     if (actPuntajeParcial == 0) actPuntajeParcial = "-";
+
     if (actPuntajeParcial == "-") actPuntajeParcialObtenido = "-";
+
+    // pone los valores en el footer
+
     var trs_tfoot = $(tabla).find('tfoot tr');
+
     $(trs_tfoot).find('td[data-key="actPuntajeParcial"]').text(actPuntajeParcial);
+
     $(trs_tfoot).find('td[data-key="actPuntajeParcialObtenido"]').text(actPuntajeParcialObtenido);
+
+    var actNotaParcial = "-";
     if (actPuntajeParcial != "-") {
-      var actNotaParcial = actPuntajeParcialObtenido * 5 / actPuntajeParcial
+
+      actNotaParcial = actPuntajeParcialObtenido * 5 / actPuntajeParcial;
+      // redondea a dos decimales
+      actNotaParcial = Math.round((actNotaParcial + 0.00001) * 100) / 100
       $(trs_tfoot).find('td[data-key="actNotaParcial"]').text(actNotaParcial);
+
     }
+
+    $( tabla ).find ( 'td[data-key="notaExamenFinal"]' ).text ( notaExamenFinal );
+
+    if ( notaExamenFinal != "-" ) {
+
+        var notaFinal = (actNotaParcial * 0.75) + (notaExamenFinal * 0.25)
+        notaFinal = Math.round((notaFinal + 0.00001) * 100) / 100
+        $ ( tabla ).find ( 'td[data-key="notaFinal"]' ).text ( notaFinal );
+
+    }
+
   });
 
 

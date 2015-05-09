@@ -32,7 +32,7 @@ block content
               th(class="fecinicio") Fecha inicio
               th(class="fecfinal") Fecha final
               th(class="puntos") Puntos
-              th(class="calificacion") Calif
+              th(class="calificacion") Calific
             tbody
               each actividad, i in agenda
                 if actividad.matnombre == materia.matnombre
@@ -52,13 +52,21 @@ block content
                 td(colspan="7", class="comando")
                   a(data-materia="#{materia.matnombre}", href="/nuevaActividad") Nueva actividad
             tfoot
-              tr
-                td(colspan="5") Puntaje
-                td(data-key="actPuntajeParcial", class="total") -
-                td(data-key="actPuntajeParcialObtenido", class="total") -
-              tr
-                td(colspan="5") Nota
-                td(data-key="actNotaParcial", colspan="2", class="total") -
+                tr
+                    td(colspan="5") Puntaje (75%)
+                    td(data-key="actPuntajeParcial", class="total") -
+                    td(data-key="actPuntajeParcialObtenido", class="total") -
+                tr
+                    td(colspan="5") Nota (75%)
+                    td(data-key="actNotaParcial", colspan="2", class="total") -
+                tr(class="notafinal")
+                    td(colspan="4", style="visibility:hidden")
+                    td Nota 25%
+                    td(data-key="notaExamenFinal", colspan="2", class="total") -
+                tr(class="notafinal")
+                    td(colspan="4", style="visibility:hidden")
+                    td Nota final
+                    td(data-key="notaFinal", colspan="2", class="total") -
             br
 
 block append scripts

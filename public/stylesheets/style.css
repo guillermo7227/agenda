@@ -122,7 +122,7 @@ th.descripcion, th.actnombre {
   width: 20%;
 }
 
-table.agenda tfoot {
+table.agenda tfoot { 
   display: none;
 }
 tfoot td {

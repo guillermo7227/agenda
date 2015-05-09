@@ -37,6 +37,8 @@ router.get('/agenda', function(req,res) {
         { fecfinal: {
           $gte: fechaComienzo,
           $lte: fechaLimite
+        }, fecinicio: {
+            $lte: new Date()
         }},
         { sort: { fecfinal: 1}}, function(e2,ordage) {
           res.render('agenda', {
@@ -46,6 +48,7 @@ router.get('/agenda', function(req,res) {
           });
         }
       );
+        agendacollection.find({})
     });
   });
 });
