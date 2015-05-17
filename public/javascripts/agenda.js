@@ -274,8 +274,7 @@ $(document).ready(function() {
     var actPuntajeParcialObtenido = 0;
     var notaExamenFinal = "-";
 
-    // acumula los valores de las actividades
-
+    // acumula los puntajes de las actividades
     $(trs_tbody).each(function(i,tr) {
 
 
@@ -330,6 +329,7 @@ $(document).ready(function() {
 
     }
 
+    notaExamenFinal = Math.round((notaExamenFinal + 0.00001) * 100) / 100
     $( tabla ).find ( 'td[data-key="notaExamenFinal"]' ).text ( notaExamenFinal );
 
     if ( notaExamenFinal != "-" ) {
