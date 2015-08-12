@@ -17,19 +17,20 @@ block content
           th Código grupo
           th Nombre de Tutor
         tfoot
-          td(colspan="5"): a(href="/nuevaMateria") Nueva materia
+          td(colspan="5"): a(href="/nuevaMateria", data-semestre="#{semestre.semcodigo}") Nueva materia
         tbody
           each materia, i in materias
-            tr
-              td(data-key="modborr")
-                // anchors modificar y borrar
-                a(href="/modificarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") m
-                &nbsp~&nbsp
-                a(href="borrarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
-              td(data-key="matnombre")= materia.matnombre
-              td(data-key="matcodigo")= materia.matcodigo
-              td(data-key="grucodigo")= materia.grucodigo
-              td(data-key="tutnombre")= materia.tutnombre
+            if materia.semestre == semestre.semcodigo
+              tr
+                td(data-key="modborr")
+                  // anchors modificar y borrar
+                  a(href="/modificarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") m
+                  &nbsp~&nbsp
+                  a(href="borrarMateria", data-semestre="#{materia.semestre}", data-matnombre="#{materia.matnombre}") b
+                td(data-key="matnombre")= materia.matnombre
+                td(data-key="matcodigo")= materia.matcodigo
+                td(data-key="grucodigo")= materia.grucodigo
+                td(data-key="tutnombre")= materia.tutnombre
 
 block append scripts
   script(src="/javascripts/materias.js")

@@ -4,7 +4,10 @@ block content
 
   h1 Agenda
 
-  p: a(href="/materias") GESTIONAR MATERIAS
+  p: a(href="/materias") GESTIONAR MATERIAS (y semestres)
+
+  if semestre == ""
+    p No existe el semestre
 
   if materias == ""
     p No hay materias
@@ -20,9 +23,10 @@ block content
                 #[span(class='proxFechaFinal', style="display:none") #{materia.fecfinal}]
                 #[span(class="proxDiasFaltan") #{materia.calificacion} ]
             br
+
     #divTablasAgenda
       each materia, i in materias
-        div(class="unaTabla", data-materia="#{materia-matnombre}")
+        div(class="unaTabla", data-materia="#{materia.matnombre}" data-semestre="#{semestre}")
           table(class="agenda")
             caption= materia.matnombre
             thead
@@ -39,9 +43,9 @@ block content
                   tr
                     td(data-key="modborr")
                       // modificar y borrar actividades
-                      a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/modificarActividad") m
+                      a(data-actividad="#{actividad.actnombre}", href="/modificarActividad") m
                       span ~
-                      a(data-materia="#{materia.matnombre}", data-actividad="#{actividad.actnombre}", href="/borrarActividad") b
+                      a(data-actividad="#{actividad.actnombre}", href="/borrarActividad") b
                     td(data-key="actnombre")= actividad.actnombre
                     td(data-key="descripcion")= actividad.descripcion
                     td(data-key="fecinicio")= actividad.fecinicio
@@ -50,7 +54,7 @@ block content
                     td(data-key="calificacion")= actividad.calificacion
               tr
                 td(colspan="7", class="comando")
-                  a(data-materia="#{materia.matnombre}", href="/nuevaActividad") Nueva actividad
+                  a(href="/nuevaActividad") Nueva actividad
             tfoot
                 tr
                     td(colspan="5") Puntaje (75%)

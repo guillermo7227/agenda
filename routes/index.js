@@ -25,33 +25,88 @@ router.get('/materias', function(req,res) {
 
 /* GET agenda */
 router.get('/agenda', function(req,res) {
+  var semestrescollection = req.nedb.semestres;
+  semestrescollection.find({}).sort({ semcodigo : -1 }).exec(function(e2,docssem) {
+    var semestreactual = docssem[0].semcodigo;
+    // res.render('agenda/' + semestreactual, {
+    //   "semestre" : semestreactual
+    // });
+    res.location("agenda/" + semestreactual);
+    res.redirect("agenda/" + semestreactual);
+  });
+});
+
+
+/* GET agenda/:semestre */
+router.get('/agenda/:sem', function(req,res) {
   var materiascollection = req.nedb.materias;
   var agendacollection = req.nedb.agenda;
-  materiascollection.find({}).sort({ matnombre : 1 }).exec(function(e,docsmat) {
-    agendacollection.find({}).sort({ fecfinal : 1, fecinicio: 1 }).exec(function(e1,docsage) {
-      var fechaLimite = new Date();
-      fechaLimite.setDate(fechaLimite.getDate() + 21);
-      var fechaComienzo = new Date();
-      fechaComienzo.setDate(fechaComienzo.getDate() - 3); // hoy menos 2 dias
-      agendacollection.find(
-        { fecfinal: {
-          $gte: fechaComienzo,
-          $lte: fechaLimite
-        }, fecinicio: {
-            $lte: new Date()
-        }},
-        { sort: { fecfinal: 1}}, function(e2,ordage) {
-          res.render('agenda', {
-            "materias"  : docsmat,
-            "agenda"    : docsage,
-            "ordAgenda" : ordage
-          });
-        }
-      );
-        agendacollection.find({})
+  var semestrescollection = req.nedb.semestres;
+  var semestreelegido = req.params.sem;
+  materiascollection.find({ semestre : semestreelegido }).sort({ matnombre : 1 }).exec(function(e,docsmat) {
+    agendacollection.find({ semestre : semestreelegido }).sort({ fecfinal : 1, fecinicio: 1 }).exec(function(e1,docsage) {
+      semestrescollection.findOne({ semcodigo : semestreelegido }).exec(function(e2,docssem) {
+        var fechaLimite = new Date();
+        fechaLimite.setDate(fechaLimite.getDate() + 21);
+        var fechaComienzo = new Date();
+        fechaComienzo.setDate(fechaComienzo.getDate() - 3); // hoy menos 2 dias
+        agendacollection.find(
+          { fecfinal: {
+            $gte: fechaComienzo,
+            $lte: fechaLimite
+          }, fecinicio: {
+              $lte: new Date()
+          }},
+          { sort: { fecfinal: 1}}, function(e2,ordage) {
+            res.render('agenda', {
+              "materias"  : docsmat,
+              "agenda"    : docsage,
+              "ordAgenda" : ordage,
+              "semestre" : docssem.semcodigo
+            });
+          }
+        );
+          agendacollection.find({})
+      });
     });
   });
 });
+
+/* GET agenda original
+router.get('/agenda', function(req,res) {
+  var materiascollection = req.nedb.materias;
+  var agendacollection = req.nedb.agenda;
+  var semestrescollection = req.nedb.semestres;
+  var semestreelegido = (req.params) ? req.params[1] : null;
+  materiascollection.find({}).sort({ matnombre : 1 }).exec(function(e,docsmat) {
+    agendacollection.find({}).sort({ fecfinal : 1, fecinicio: 1 }).exec(function(e1,docsage) {
+      semestrescollection.find({}).sort({ semcodigo : -1 }).exec(function(e2,docssem) {
+        var fechaLimite = new Date();
+        fechaLimite.setDate(fechaLimite.getDate() + 21);
+        var fechaComienzo = new Date();
+        fechaComienzo.setDate(fechaComienzo.getDate() - 3); // hoy menos 2 dias
+        agendacollection.find(
+          { fecfinal: {
+            $gte: fechaComienzo,
+            $lte: fechaLimite
+          }, fecinicio: {
+              $lte: new Date()
+          }},
+          { sort: { fecfinal: 1}}, function(e2,ordage) {
+            res.render('agenda', {
+              "materias"  : docsmat,
+              "agenda"    : docsage,
+              "ordAgenda" : ordage,
+              "semestres" : docssem
+            });
+          }
+        );
+          agendacollection.find({})
+      });
+    });
+  });
+});
+*/
 
 /* GET nueva materia */
 router.get('/nuevaMateria', function(req,res) {
@@ -106,10 +161,9 @@ router.post('/addMateria', function(req, res) {
   var grucodigo = req.body.grucodigo;
   var tutnombre = req.body.tutnombre;
 
-  var db = req.db;
-  var collection = db.get('materias');
+  var materiascollection = req.nedb.materias;
 
-  collection.insert({
+  materiascollection.insert({
     "semestre"  : semestre,
     "matnombre" : matnombre,
     "matcodigo" : matcodigo,
@@ -117,7 +171,7 @@ router.post('/addMateria', function(req, res) {
     "tutnombre" : tutnombre
   }, function(err, doc) {
     if (err) {
-      res.send("No se pudo escribir en la base de datos.");
+      res.send("Error al crear la materia");
     } else {
       res.location("materias");
       res.redirect("materias");
@@ -129,6 +183,7 @@ router.post('/addMateria', function(req, res) {
 router.post('/addActividad', function(req,res) {
   var matnombre = req.body.matnombre;
   var actnombre = req.body.actnombre;
+  var semestre = req.body.semestre;
   var descripcion = req.body.descripcion;
   var fecinicio = new Date(req.body.fecinicio);
   var fecfinal = new Date(req.body.fecfinal);
@@ -138,6 +193,7 @@ router.post('/addActividad', function(req,res) {
   var agendacollection = req.nedb.agenda;
 
   agendacollection.insert({
+    "semestre" : semestre,
     "matnombre" : matnombre,
     "actnombre" : actnombre,
     "descripcion" : descripcion,
@@ -147,7 +203,7 @@ router.post('/addActividad', function(req,res) {
     "calificacion" : calificacion
   }, function(err, doc) {
     if (err) {
-      res.send("No se pudo escribir en la base de datos");
+      res.send("Error al crear la actiidad");
     } else {
       res.location("agenda");
       res.redirect("agenda");
@@ -159,12 +215,14 @@ router.post('/addActividad', function(req,res) {
 router.post('/delActividad', function(req,res) {
   var matnombre = req.body.matnombre;
   var actnombre = req.body.actnombre;
+  var semestre = req.body.semestre;
 
   var agendacollection = req.nedb.agenda;
 
   agendacollection.remove({
     "matnombre" : matnombre,
-    "actnombre" : actnombre
+    "actnombre" : actnombre,
+    "semestre" : semestre
   }, function(err, doc) {
     if (err) {
       res.send("No se pudo borrar el documento de la base de datos.");
@@ -179,6 +237,7 @@ router.post('/delActividad', function(req,res) {
 router.post('/updActividad', function(req,res) {
   var agendacollection = req.nedb.agenda;
   agendacollection.update({
+    "semestre" : req.body.semestre,
     "matnombre" : req.body.matnombre,
     "actnombre" : req.body.actnombre
   }, {
@@ -202,7 +261,7 @@ router.post('/updActividad', function(req,res) {
 /* POST nuevo semestre */
 router.post('/addSemestre', function(req,res) {
   var semcodigo = req.body.semcodigo;
-  var semestrescollection = req.db.get('semestres');
+  var semestrescollection = req.nedb.semestres;
   semestrescollection.insert({
     "semcodigo" : semcodigo
   }, function(err, doc) {
@@ -223,7 +282,7 @@ router.post('/updateMateria', function(req,res) {
   var grucodigo = req.body.grucodigo;
   var tutnombre = req.body.tutnombre;
 
-  var materiascollection = req.db.get('materias');
+  var materiascollection = req.nedb.materias;
   materiascollection.update({
     "semestre" : semestre,
     "matnombre" : matnombre
@@ -244,7 +303,7 @@ router.post('/updateMateria', function(req,res) {
 router.post('/deleteMateria', function(req,res) {
   var semestre = req.body.semestre;
   var matnombre = req.body.matnombre;
-  var materiascollection = req.db.get('materias');
+  var materiascollection = req.nedb.materias;
   materiascollection.remove({
     semestre: semestre,
     matnombre: matnombre

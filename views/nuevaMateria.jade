@@ -4,7 +4,7 @@ block content
   h1= title
 
   form#frmNuevaMateria(name="frmNuevaMateria", method="post", action="/addMateria")
-    input(type="text", name="semestre", placeholder="Semestre p.ej: 2015-1")
+    input(type="text", id="semestre", name="semestre", readonly="readonly", placeholder="Semestre p.ej: 2015-1")
     br
     input(type="text", name="matnombre", placeholder="Nombre de materia")
     br
@@ -17,3 +17,6 @@ block content
     button#btnSubmit(type="submit") Agregar
     &nbsp
     a(href="/materias") Cancelar
+    
+block append scripts
+  script(src="/javascripts/nuevaMateria.js")

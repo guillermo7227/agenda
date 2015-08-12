@@ -6,6 +6,7 @@ block content
   form#frmNuevaActividad(method="post", action="/addActividad")
     p Materia: #[span#spaMateria]
     input#hidMateria(type="hidden", name="matnombre")
+    input#hidSemestre(type="hidden", name="semestre")
 
     input#txtNombreActividad(type="text", name="actnombre", placeholder="Nombre actividad")
     input#txtDescripcion(type="text", name="descripcion", placeholder="Descripción")

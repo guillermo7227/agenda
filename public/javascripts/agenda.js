@@ -28,7 +28,7 @@ $(document).ready(function() {
         }
     }
 
-    // funcion devuelve true si la fila pasada es la fila del examen final
+    // funcion para saber si la fila recorrida es la fila del examen final
     function isExamenFinalRow ( tablerow ) {
 
         var actividad = $ ( tablerow ). find ( 'td[data-key="actividad"]' ).text();
@@ -38,7 +38,7 @@ $(document).ready(function() {
 
     }
 
-
+    // Formatea los span de 'Opciones'
     $('#spaVerTotales').css('display', 'inline');
     $('#spaResaltarColaborativos').css('display', 'inline');
     $('#spaAlternarProximos').css('display', 'inline');
@@ -104,8 +104,9 @@ $(document).ready(function() {
   // comandos Mod y Borr en tablas de Agenda //TODO: fix this
   $("table.agenda a").on("click", function(e) {
     var href = $(this).attr('href');
-    sessionStorage.setItem('materia', $(this).attr("data-materia"));
     sessionStorage.setItem('actividad', $(this).attr("data-actividad"));
+    sessionStorage.setItem('materia', $(this).closest('div').attr("data-materia"));
+    sessionStorage.setItem('semestre', $(this).closest('div').attr("data-semestre"));
     if (href == "/modificarActividad") {
       // recupera los valores de la actividad seleccionada
       var fila = $(this).closest('tr');
@@ -174,7 +175,7 @@ $(document).ready(function() {
 
 
     /***********************
-     * TRABAJO CON LAS TABLAS
+     * APARIENCIA CON LAS TABLAS
      **********************************************/
 
   // formatea las fechas a YYYY-AA-MM //TODO: fix this

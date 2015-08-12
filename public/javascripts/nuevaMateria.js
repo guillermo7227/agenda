@@ -6,7 +6,8 @@ $(document).ready(function() {
     $("#spaMateria").text(materia);
 
     $("#hidMateria").val(materia);
-    $("#hidSemestre").val(semestre);
+
+    $("#semestre").val(semestre);
 
 
 });
