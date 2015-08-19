@@ -236,6 +236,9 @@ router.post('/delActividad', function(req,res) {
 /* POST modifica una actividad */
 router.post('/updActividad', function(req,res) {
   var agendacollection = req.nedb.agenda;
+  var calif = req.body.calificacion;
+  calif = (isNaN(calif)) ? calif.toUpperCase() : calif;
+
   agendacollection.update({
     "semestre" : req.body.semestre,
     "matnombre" : req.body.matnombre,
@@ -246,7 +249,7 @@ router.post('/updActividad', function(req,res) {
       "fecinicio" : new Date(req.body.fecinicio),
       "fecfinal"  : new Date(req.body.fecfinal),
       "puntos"    : req.body.puntos,
-      "calificacion" : req.body.calificacion
+      "calificacion" : calif
     }
   }, function(err,doc) {
     if (err) {

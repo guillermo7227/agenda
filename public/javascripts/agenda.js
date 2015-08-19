@@ -31,8 +31,8 @@ $(document).ready(function() {
     // funcion para saber si la fila recorrida es la fila del examen final
     function isExamenFinalRow ( tablerow ) {
 
-        var actividad = $ ( tablerow ). find ( 'td[data-key="actividad"]' ).text();
-        var descripcion = $ ( tablerow ). find ( 'td[data-key="descripcion"]' ).text();
+        var actividad = $( tablerow ). find ( 'td[data-key="actividad"]' ).text();
+        var descripcion = $( tablerow ). find ( 'td[data-key="descripcion"]' ).text();
 
         return ( (actividad + '' + descripcion).toLowerCase().indexOf ( 'final' ) > 0 );
 
