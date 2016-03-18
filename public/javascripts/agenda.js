@@ -160,18 +160,18 @@ $(document).ready(function() {
     fecha.innerHTML = formatDate(fecfinal);
   });
 
-    // pone los dias que faltan en 'Proximos'
-    $('#divProximos').children('div').each(function(i,unProximo) {
-        var unProximo = $(unProximo);
-        var fechaFinal = fixDate(new Date(unProximo.find('.proxFechaFinal').text()));
-        var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
+  // pone los dias que faltan en 'Proximos'
+  $('#divProximos').children('div').each(function(i,unProximo) {
+      var unProximo = $(unProximo);
+      var fechaFinal = fixDate(new Date(unProximo.find('.proxFechaFinal').text()));
+      var diasQueFaltan = getDaysDifference(fechaFinal, Date.now());
 
-        if (diasQueFaltan < 0) {
-          unProximo.find('.proxDiasFaltan').text("Cerrada");
-        } else {
-          unProximo.find('.proxDiasFaltan').text(diasQueFaltan + " día(s)");
-        }
-    });
+      if (diasQueFaltan < 0) {
+        unProximo.find('.proxDiasFaltan').text("Cerrada");
+      } else {
+        unProximo.find('.proxDiasFaltan').text(diasQueFaltan + " día(s)");
+      }
+  });
 
 
     /***********************
@@ -216,6 +216,30 @@ $(document).ready(function() {
     }
   });
 
+    // quita de proximos si ya esta completo (E)nttregado
+  $('#divProximos').find('div').each(function(i, div) {
+    var materiaProximo = $(div).find('.materiaProximo');
+    var actividadProximo = $(div).find('.actividadProximo');
+    $('table > caption').each(function(i, caption) {
+      if (~materiaProximo.text().indexOf($(caption).html())) {
+        $(caption).parent().find('td[data-key="actnombre"]').each(function(i, td) {
+          // console.log($(td).text())
+          if (actividadProximo.text() === $(td).text()) {
+            if ($(td).parent().find('td[data-key="calificacion"]').text() === "E") {
+              $(materiaProximo).parent().addClass('cEntregada');
+            }
+            // console.log($(td).parent().find('td[data-key="calificacion"]').text())
+          }
+        })
+        // $(caption).parent().find('td[data-key="actnombre"]').each(function(td) {
+        //   console.log($(td).text())
+        //   if ($(td).text() === $(actividadProximo).text()) {
+        //   }
+        // });
+      }
+    });
+  });
+
   // pareja los altos de tablas de dos en dos
   $('#divTablasAgenda').find('div').each(function(i,div) {
     if (i % 2 != 0) { //tablas de la derecha
@@ -228,40 +252,40 @@ $(document).ready(function() {
   });
 
 
-    // Muestra los totales finales si existe una calificación del examen final (25%)
-    $('table.agenda').each( function ( i, table ) {
+  // Muestra los totales finales si existe una calificación del examen final (25%)
+  $('table.agenda').each( function ( i, table ) {
 
-        $(table).find ( 'tbody tr' ).each ( function ( i, tr ) {
+      $(table).find ( 'tbody tr' ).each ( function ( i, tr ) {
 
-            if ( isExamenFinalRow ( tr ) ) {
+          if ( isExamenFinalRow ( tr ) ) {
 
-                var calificacionExamenFinal = $(tr).find( 'td[data-key="calificacion"]' ).text();
+              var calificacionExamenFinal = $(tr).find( 'td[data-key="calificacion"]' ).text();
 
-                if ( !isNaN ( parseFloat ( calificacionExamenFinal ) ) ) {
+              if ( !isNaN ( parseFloat ( calificacionExamenFinal ) ) ) {
 
-                    // existe una calificacion
-                    $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
+                  // existe una calificacion
+                  $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
 
-                        $( row ).css ( 'display', 'table-row' );
+                      $( row ).css ( 'display', 'table-row' );
 
-                    });
+                  });
 
-                } else {
+              } else {
 
-                    // no existe una calificacion
-                    $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
+                  // no existe una calificacion
+                  $(table).find ( 'tfoot .notafinal' ).each ( function ( i, row ) {
 
-                        $( row ).css ( 'display', 'none' );
+                      $( row ).css ( 'display', 'none' );
 
-                    });
+                  });
 
-                }
+              }
 
-            }
+          }
 
-        });
+      });
 
-    });
+  });
 
 
 

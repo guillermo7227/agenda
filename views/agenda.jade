@@ -15,10 +15,11 @@ block content
     #divProximos
       each materia, i in ordAgenda
         div(style="border-bottom:solid 1px")
-            span [#{materia.matnombre}]
+            span(class="materiaProximo") [#{materia.matnombre}]
             br
-            span(style="padding-left:2em").
-                #{materia.descripcion}. #{materia.actnombre}.  #{materia.puntos} pts
+            span(class="actividadProximo" style="padding-left:2em") #{materia.actnombre}
+            span(style="padding-left:0.5em").
+                #{materia.descripcion}. #{materia.puntos} pts
             span(style="float:right").
                 #[span(class='proxFechaFinal', style="display:none") #{materia.fecfinal}]
                 #[span(class="proxDiasFaltan") #{materia.calificacion} ]
